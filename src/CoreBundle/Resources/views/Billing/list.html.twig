@@ -1,0 +1,78 @@
+{% extends "CoreBundle::main-layout.html.twig" %}
+
+{% block title %}Billing List{% endblock %}
+{% block body %}
+    <div id="content-wrapper">
+        <div class="page-header">
+            <div class="row">
+                <h1 class="col-xs-12 col-sm-4 text-center text-left-sm"><i class="fa fa-th-list page-header-icon"></i>&nbsp;&nbsp;Billing List</h1>
+                <div class="col-xs-12 col-sm-8"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="panel-title">List</span>
+                        <div class="panel-heading-controls">
+                            <button class="btn btn-primary addBilling" id="{{path('billing_new')}}"><span class="fa fa-plus-square"></span>&nbsp;&nbsp;Add Billing</button>
+                        </div> <!-- / .panel-heading-controls -->
+                    </div> <!-- / .panel-heading -->
+
+                    <div class="panel-body">
+                        <div class="table-primary">
+                            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="jq-datatables-example">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Bill Number</th>
+                                        <th>Bill Date</th>
+                                        <th>Company</th>
+                                        <th>Rent Amount</th>
+                                        <th>Electricity Units</th>
+                                        <th>Unit Price</th>
+                                        <th>Electricity Amount</th>
+                                        <th>Canteen Amount</th>
+                                        <th>Total Amount</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for k, billing in billings %}
+                                        <tr id="{{path('billing_show', {'id':billing.id})}}" class="{% if k/2 == 0 %} 'even' {% else %} 'odd' {% endif %} gradeX">
+                                            <td class="showBilling">{{loop.index}}</td>
+                                            <td class="showBilling">{{billing.billNo}}</td>
+                                            <td class="showBilling">{{billing.billingDate|date('d M, Y')}}</td>
+                                            <td class="showBilling">{{billing.company.companyName}}</td>
+                                            <td class="showBilling center">{{billing.rentAmount}}</td>
+                                            <td class="showBilling center">{{billing.electricityUnits}}</td>
+                                            <td class="showBilling center">{{billing.company.electricityPerUnit}}</td>
+                                            <td class="showBilling center">{{ (billing.electricityUnits * billing.company.electricityPerUnit) }}</td>
+                                            <td class="showBilling center">{{ billing.canteenAmount }}</td>
+                                            <td class="showBilling center">{{ billing.billingTotalAmount }}</td>
+                                            <td class="center">
+                                                <a href="{{path('billing_edit', {'id' : billing.id})}}">Edit</a> 
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- / #content-wrapper -->
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $('.addBilling').on('click', function(){
+            window.location.href = $(this).attr('id')
+        })
+        $('.showBilling').css('cursor', 'pointer')
+        $('.showBilling').on('click', function(){
+            window.location.href = $(this).parent('tr').attr('id')
+        })
+    </script>
+{% endblock %}

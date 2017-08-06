@@ -1,0 +1,41 @@
+CoreBundle\Entity\Billing:
+    type: entity
+    manyToOne:
+        company:
+            targetEntity: Company
+            inversedBy: billing
+            joinColumn:
+                name: companyId
+                referencedColumnName: id
+                onDelete: CASCADE
+    table: null
+    repositoryClass: CoreBundle\Repository\BillingRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        billNo:
+            type: integer
+            unique: true
+        billingDate:
+            type: datetime
+        billingParticulars:
+            type: text
+            nullable: true
+        rentAmount:
+            type: float
+        electricityUnits:
+            type: float
+        electricOldReading:
+            type: float
+        electricNewReading:
+            type: float
+        canteenAmount:
+            type: float
+            nullable: true
+        billingTotalAmount:
+            type: float
+    lifecycleCallbacks: {  }

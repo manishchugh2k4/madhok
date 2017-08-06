@@ -1,0 +1,48 @@
+CoreBundle\Entity\Setting:
+    type: entity
+    table: null
+    repositoryClass: CoreBundle\Repository\SettingRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contactPersonName:
+            type: string
+            length: 255
+        companyName:
+            type: string
+            length: 255
+        address:
+            type: string
+            length: 255
+        phone:
+            type: string
+            length: 255
+            nullable: true
+        mobile:
+            type: string
+            length: 255
+            nullable: true
+        gstNo:
+            type: string
+            length: 255
+        serviceTaxNo:
+            type: string
+            length: 255
+        sacCode:
+            type: string
+            length: 255
+        sgstPercent:
+            type: integer
+        cgstPercent:
+            type: integer
+        igstPercent:
+            type: integer
+        rentTdsPercentage:
+            type: float
+        electricityTdsPercentage:
+            type: float
+    lifecycleCallbacks: {  }

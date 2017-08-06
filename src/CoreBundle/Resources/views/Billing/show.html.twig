@@ -1,0 +1,68 @@
+{% extends "CoreBundle::main-layout.html.twig" %}
+
+{% block stylesheets %}
+    <style type="text/css">.tg-yw4l{ vertical-align:top; }</style>
+{% endblock %}
+
+{% block body %}
+    <div id="content-wrapper">
+        <div class="page-header">
+            <div class="row">
+                <h1 class="col-xs-12 col-sm-4 text-center text-left-sm"><i class="fa fa-list-alt page-header-icon"></i>&nbsp;&nbsp;Bill No: {{ billing.billNo }}</h1>
+            </div>
+        </div>
+        {% if app.session.flashBag.has('success') %}
+            <div class="alert alert-success">
+                {% for msg in app.session.flashBag.get('success') %}
+                    {{ msg }}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-8 billView" id="{{path('billing_bill_view', {'id':billing.id})}}">
+                {% include 'CoreBundle:Billing:billView.html.twig' %}
+                <div class="panel-footer row">
+                    <div class="col-md-6 text-left">
+                        <button id="{{path('send_bill_mail', {'id':billing.id})}}" class="sendMail btn btn-primary fa fa-mail-forward">&nbsp;&nbsp;Send Mail</button>
+                    </div>
+                    <div class="col-md-6 text-right">
+                        <button class="printBill btn btn-success fa fa-print">&nbsp;&nbsp;Print</button>
+                        <button class="confirmDel btn btn-danger fa fa-trash-o">&nbsp;&nbsp; Delete</button>
+                        <button class="editBilling btn btn-primary fa fa-edit" id="{{ path('billing_edit', {'id':billing.id}) }}">&nbsp;&nbsp;Edit</button>
+                        <button class="moveToList btn btn-default" id="{{ path('billing_list') }}">Back to list</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_start(delete_form, {attr: {id: 'delFrm'}}) }}
+        <div class="hide"><input type="submit" value="Delete"></div>
+    {{ form_end(delete_form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('.switcher').switcher({ theme: 'square' });
+            $('.confirmDel').on('click', function(){
+                if(confirm('Are you sure to remove?')) {
+                    $('#delFrm').submit();
+                }
+            })
+            $('.editBilling').on('click', function(){
+                window.location.href = $(this).attr('id')
+            })
+            $('.moveToList').on('click', function(){
+                window.location.href = $(this).attr('id')
+            })
+            $('.printBill').on('click', function(){
+                var w = window.open($('.billView').attr('id'), "popupWindow", "width=750, height=600, scrollbars=auto");
+                var $w = $(w.document.body);
+            })
+            $('.sendMail').on('click', function(){
+                window.location.href = $(this).attr('id');
+            })
+        });
+    </script>
+{% endblock %}

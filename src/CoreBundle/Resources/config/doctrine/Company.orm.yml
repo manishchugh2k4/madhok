@@ -1,0 +1,54 @@
+CoreBundle\Entity\Company:
+    type: entity
+    oneToMany:
+        billing:
+            targetEntity: Billing
+            mappedBy: company
+    table: null
+    repositoryClass: CoreBundle\Repository\CompanyRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        contactPerson:
+            type: string
+            length: 255
+        companyName:
+            type: string
+            length: 255
+        email:
+            type: string
+            length: 255
+        address:
+            type: string
+            length: 255
+        officeNo:
+            type: string
+            length: 255
+            nullable: true
+        floorNo:
+            type: string
+            length: 255
+            nullable: true
+        phone:
+            type: string
+            length: 255
+            nullable: true
+        mobile:
+            type: string
+            length: 255
+            nullable: true
+        electricityPerUnit:
+            type: float
+            nullable: true
+        gstNo:
+            type: string
+            length: 255
+        igstApplies:
+            type: boolean
+        active:
+            type: boolean
+    lifecycleCallbacks: {  }

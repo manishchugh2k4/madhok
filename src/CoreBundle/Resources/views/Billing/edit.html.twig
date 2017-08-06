@@ -1,0 +1,158 @@
+{% extends "CoreBundle::main-layout.html.twig" %}
+
+{% block body %}
+    <div id="content-wrapper">
+        <div class="page-header">
+            <div class="row">
+                <h1 class="col-xs-12 col-sm-4 text-center text-left-sm"><i class="fa fa-edit page-header-icon"></i>&nbsp;&nbsp;Edit Bill Details</h1>
+                <div class="col-xs-12 col-sm-8"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-8">
+                {% if errors is defined and errors|length>0 %}
+                    <div class="alert alert-danger">
+                        <button type="button" class="close" data-dismiss="alert">×</button>
+                        <strong>Oops!</strong><br> 
+                        {% for error in errors %}
+                            {{ error.message }}<br>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        {{ form_start(edit_form, {attr: {id: 'editFrm', class: 'panel form-horizontal', novalidate: 'novalidate'}}) }}
+                            <div class="panel-body">
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.billNo) }}:</label>
+                                    <div class="col-sm-6" style="padding-top:7px;">
+                                        <b>{{billing.billNo}}</b>
+                                        {{ form_widget(edit_form.billNo, {attr:{'class':'hide', 'value':billing.billNo}}) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.company) }}:</label>
+                                    <div class="col-sm-6" style="padding-top:7px;">
+                                        {{billing.company.companyName}}
+                                        {{ form_widget(edit_form.company, {attr: {'class':'hide'}}) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.billingParticulars) }}:</label>
+                                    <div class="col-sm-6">
+                                        {{ form_widget(edit_form.billingParticulars) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.rentAmount) }}:</label>
+                                    <div class="col-sm-6">
+                                        {{ form_widget(edit_form.rentAmount) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.canteenAmount) }}:</label>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(edit_form.canteenAmount) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.electricNewReading) }}:</label>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(edit_form.electricNewReading) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.electricOldReading) }}:</label>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(edit_form.electricOldReading) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.electricityUnits) }}</label>
+                                    <div class="col-sm-3">{{ form_widget(edit_form.electricityUnits, {attr:{'readonly':'readonly'}}) }}</div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.chargePerUnit) }}</label>
+                                    <div class="col-sm-3">{{ form_widget(edit_form.chargePerUnit, {attr:{'value': billing.company.electricityPerUnit, 'readonly':'readonly'}}) }}</div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.electricityAmt) }}</label>
+                                    <div class="col-sm-3">{{ form_widget(edit_form.electricityAmt, {attr:{'value': (billing.electricityUnits * billing.company.electricityPerUnit), 'readonly':'readonly'}}) }}</div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.billingTotalAmount) }}:</label>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(edit_form.billingTotalAmount, {attr:{'readonly':'readonly'}}) }}
+                                    </div>
+                                </div>
+                            </div>
+                        {{ form_end(edit_form) }}
+                        <div class="panel-footer text-right">
+                            <button class="confirmDel btn btn-danger fa fa-trash-o"></button>
+                            <button class="submitFrm btn btn-primary">Update</button>
+                            <button class="moveToList btn btn-default" id="{{ path('billing_list') }}">Cancel</button>
+                        </div>
+
+                        {{ form_start(delete_form, {attr: {id: 'delFrm'}}) }}
+                        {{ form_end(delete_form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- / #content-wrapper -->
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('.confirmDel').on('click', function(){
+                if(confirm('Are you sure to remove?')) {
+                    $('#delFrm').submit();
+                }
+            })
+            $('.submitFrm').on('click', function(){
+                $('#editFrm').submit();
+            })
+            $('.moveToList').on('click', function(){
+                window.location.href = $(this).attr('id')
+            })
+            $('.newReading, .oldReading').on('change', function(){ 
+                var unitsConsumed = $('.newReading').val() - $('.oldReading').val();
+                $('.electricityUnits').val(unitsConsumed)
+
+                if ($('.newReading').val() != '' && $('.oldReading').val() != '') {
+                    if (unitsConsumed > 0 && $('.chargePerUnit').val() != '') {
+                        $('.electricityAmt').val(unitsConsumed * $('.chargePerUnit').val())
+                    }
+                }
+            })
+            $('.companyList').on('change', function(){
+                $('.chargePerUnit').val('')
+                $('.chargePerUnit').val($('#company'+$(this).val()).html())
+
+                if ($('.newReading').val() != '' && $('.oldReading').val() != '') {
+                    var unitsConsumed = $('.newReading').val() - $('.oldReading').val();
+                    if (unitsConsumed > 0 && $('.chargePerUnit').val() != '') {
+                        $('.electricityAmt').val(unitsConsumed * $('.chargePerUnit').val())
+                    }
+                }
+            });
+            
+            
+            $('.rentAmount, .canteenAmount, .electricityAmt, .newReading, .oldReading').on('change', function(){
+                var rent = $('.rentAmount').val() == '' ? 0 : parseInt($('.rentAmount').val())
+                var canteen = $('.canteenAmount').val() == '' ? 0 : parseInt($('.canteenAmount').val())
+                
+                var electricity = 0;
+                if ($('.newReading').val() != '' && $('.oldReading').val() != '') {
+                    var unitsConsumed = $('.newReading').val() - $('.oldReading').val();
+                    if (unitsConsumed > 0 && $('.chargePerUnit').val() != '') {
+                        electricity = unitsConsumed * $('.chargePerUnit').val()
+                    }
+                }
+                $('.billingTotalAmount').val(rent + canteen + electricity)
+            })
+        });
+    </script>
+{% endblock %}

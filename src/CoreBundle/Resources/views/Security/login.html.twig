@@ -1,0 +1,34 @@
+{% extends "CoreBundle::single-layout.html.twig" %}
+
+{% block title %}Login{% endblock %}
+{% block body %}
+
+    {% if error is defined and error %}
+        <div class="alert alert-danger">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Oops!</strong> {{ error.message }}
+        </div>
+    {% endif %}
+
+    <form action="{{ path('login_check') }}" id="signin-form_id" method="post" novalidate>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <div class="signin-text">
+            <span>Sign In to your account</span>
+        </div> <!-- / .signin-text -->
+
+        <div class="form-group w-icon">
+            <input type="text" name="_username" class="form-control input-lg" value="{{ last_username }}" placeholder="Username or email">
+            <span class="fa fa-user signin-form-icon"></span>
+        </div> <!-- / Username -->
+
+        <div class="form-group w-icon">
+            <input type="password" name="_password" class="form-control input-lg" placeholder="Password">
+            <span class="fa fa-lock signin-form-icon"></span>
+        </div> <!-- / Password -->
+
+        <div class="form-actions">
+            <input type="submit" value="SIGN IN" class="signin-btn bg-primary">
+            {#<a href="#" class="forgot-password" id="forgot-password-link">Forgot your password?</a>#}
+        </div> <!-- / .form-actions -->
+    </form>
+{% endblock %}

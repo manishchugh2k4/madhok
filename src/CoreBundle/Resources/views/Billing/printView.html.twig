@@ -1,0 +1,11 @@
+{% extends "CoreBundle::print-layout.html.twig" %}
+
+{% block stylesheets %}
+    <style type="text/css">.tg-yw4l{ vertical-align:top; }</style>
+{% endblock %}
+
+{% block body %}
+    <div class="text-center text-left-sm" id="{{path('billing_bill_view', {'id':billing.id})}}">
+        {% include 'CoreBundle:Billing:billView.html.twig' %}
+    </div>
+{% endblock %}

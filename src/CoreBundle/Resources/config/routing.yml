@@ -1,0 +1,75 @@
+login:
+    path:     /login
+    defaults: { _controller: CoreBundle:Security:login }
+
+login_check:
+    path:     /login_check
+    defaults: { _controller: CoreBundle:Security:login }
+
+logout:
+    path:     /logout
+
+homepage:
+    path:     /
+    defaults: { _controller: CoreBundle:Default:index }
+    methods:  GET
+
+company_list:
+    path:     /companies/list
+    defaults: { _controller: "CoreBundle:Company:list" }
+    methods:  GET
+
+company_show:
+    path:     /company/{id}/show
+    defaults: { _controller: "CoreBundle:Company:show" }
+    methods:  GET
+
+company_new:
+    path:     /company/new
+    defaults: { _controller: "CoreBundle:Company:new" }
+    methods:  [GET, POST]
+
+company_edit:
+    path:     /company/{id}/edit
+    defaults: { _controller: "CoreBundle:Company:edit" }
+    methods:  [GET, POST]
+
+company_delete:
+    path:     /company/{id}/delete
+    defaults: { _controller: "CoreBundle:Company:delete" }
+    methods:  DELETE
+
+billing_list:
+    path:     /billing/list
+    defaults: { _controller: "CoreBundle:Billing:list" }
+    methods:  GET
+
+send_bill_mail:
+    path:     /billing/send/bill/mail/{id}
+    defaults: { _controller: "CoreBundle:Billing:mailBill" }
+    methods:  GET
+
+billing_bill_view:
+    path:     /billing/bill/{id}/view
+    defaults: { _controller: "CoreBundle:Billing:printView" }
+    methods:  GET
+
+billing_show:
+    path:     /billing/{id}/show
+    defaults: { _controller: "CoreBundle:Billing:show" }
+    methods:  GET
+
+billing_new:
+    path:     /billing/new
+    defaults: { _controller: "CoreBundle:Billing:new" }
+    methods:  [GET, POST]
+
+billing_edit:
+    path:     /billing/{id}/edit
+    defaults: { _controller: "CoreBundle:Billing:edit" }
+    methods:  [GET, POST]
+
+billing_delete:
+    path:     /billing/{id}/delete
+    defaults: { _controller: "CoreBundle:Billing:delete" }
+    methods:  DELETE

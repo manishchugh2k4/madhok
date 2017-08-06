@@ -1,0 +1,157 @@
+<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered">
+    <tr>
+        <th class="tg-yw4l" colspan="4" style="text-align:left;">
+            <b>GST No : &nbsp;</b> {{setting.gstNo}}
+            <br>
+            <b>S.T. No : &nbsp;</b> {{setting.serviceTaxNo}}
+        </th>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" colspan="4" align="center">
+            <h3>{{setting.companyName}}</h3>
+            {{setting.address}}
+        </td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" colspan="3" style="text-align:left;"><b>Bill No:</b> {{ billing.billNo }}</td>
+        <td class="tg-yw4l" style="text-align:left;"><b>Date:</b> {{ billing.billingDate|date('d M, Y') }}</td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" style="text-align:left;"><b>To M/S:</b> &nbsp; 
+        </td>
+        <td class="tg-yw4l" colspan="3" style="text-align:left;">
+        {{billing.company.companyName}}
+        <br>Office: {{billing.company.officeNo}}, Floor: {{billing.company.floorNo}}
+        <br>{{billing.company.address}}
+        </td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" colspan="4" style="text-align:left;"><b>GST No:</b> &nbsp; {{billing.company.gstNo}}</td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:center;"><b>Particulars</b></td>
+        <td class="tg-yw4l" style="text-align:center;"><b>SAC Code</b></td>
+        <td class="tg-yw4l" style="text-align:center;"><b>Amount</b></td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" style="text-align:left;">
+            <b>Office Rent</b>
+        </td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="width:150px; text-align:center;">{{setting.sacCode}}</td>
+        <td class="tg-yw4l" style="width:150px; text-align:right;">
+            {{ billing.rentAmount|round(2, 'floor') }}
+            {#&nbsp;<i class="fa fa-inr"></i>#}
+            {#(TDS) &nbsp;&nbsp;&nbsp;&nbsp;- {{ (billing.rentAmount * (setting.rentTdsPercentage / 100))|round(0, 'floor') }} #}
+        </td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" style="text-align:left;">
+            <b>Telephone</b>
+            <br>
+            <b>Local</b>
+            <br>
+            <b>STD</b>
+        </td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" style="text-align:left;"><b>Electricity</b></td>
+        <td class="tg-yw4l" style="text-align:left;">
+            Old Reading: {{billing.electricOldReading}} 
+            <br>
+            New Reading: {{billing.electricNewReading}}
+            <br>
+            Units consumed: {{(billing.electricNewReading - billing.electricOldReading)}}
+        </td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:right;">
+            {{ (billing.electricityUnits * billing.company.electricityPerUnit)|round(2, 'floor') }}
+            {#(TDS) &nbsp;&nbsp;&nbsp;&nbsp;- {{ ((billing.electricityUnits * billing.company.electricityPerUnit) * (setting.electricityTdsPercentage / 100))|round(0, 'floor') }}#}
+        </td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" style="text-align:left;"><b>Canteen</b></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:right;">{{billing.canteenAmount|round(2, 'floor')}}</td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:left;"><b>Total</b></td>
+        <td class="tg-yw4l" style="text-align:right;">
+            {% set total = (billing.canteenAmount + billing.rentAmount + (billing.electricityUnits * billing.company.electricityPerUnit))|round(0, 'floor') %}
+            {{ total|round(2, 'floor') }}
+        </td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:left;"><b>SGST-{{setting.sgstPercent}}%</b></td>
+        <td class="tg-yw4l" style="text-align:right;">
+            {% if billing.company.igstApplies is null or not billing.company.igstApplies %}
+                {% set sgstAmount = (billing.rentAmount * (setting.sgstPercent / 100))|round(0, 'floor') %}
+                {{ sgstAmount|round(2, 'floor') }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:left;"><b>CGST-{{setting.cgstPercent}}%</b></td>
+        <td class="tg-yw4l" style="text-align:right;">
+            {% if billing.company.igstApplies is null or not billing.company.igstApplies %}
+                {% set cgstAmount = ( billing.rentAmount * (setting.cgstPercent / 100))|round(0, 'floor') %}
+                {{ cgstAmount|round(2, 'floor') }}
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:left;"><b>IGST-{{setting.igstPercent}}%</b></td>
+        <td class="tg-yw4l" style="text-align:right;">
+            {% if billing.company.igstApplies is not null and billing.company.igstApplies == 1 %}
+                {% set igstAmount = (billing.rentAmount * (setting.igstPercent / 100))|round(0, 'floor') %}
+                {{ igstAmount|round(2, 'floor') }}
+            {% endif %}
+        </td>
+    </tr>
+    
+    {% if igstAmount is defined %}
+        {% set gstAmount = igstAmount %}
+    {% elseif sgstAmount is defined and cgstAmount is defined %}
+        {% set gstAmount = sgstAmount + cgstAmount %}
+    {% endif %}
+
+    {% set grandTotal = total + gstAmount %}
+    <tr>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l" style="text-align:left;"><b>Grand Total</b></td>
+        <td class="tg-yw4l" style="text-align:right;">{{grandTotal|round(2, 'floor')}}</td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" colspan="4"></td>
+    </tr>
+    <tr>
+        <td class="tg-yw4l" colspan="3" style="text-align:left;">Amount in words-</td>
+        <td class="tg-yw4l">
+            <table>
+                <tr>
+                    <td>For {{setting.companyName}}<td>
+                </tr>
+                <tr>
+                    <td align="center"><img width="75%" height="75%" alt="Admin" src="{{ asset('/bundles/core/assets/sign.png') }}"><td>
+                </tr>
+                <tr>
+                    <td>Authorised Signature<td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

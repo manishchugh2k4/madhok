@@ -1,0 +1,93 @@
+{% extends "CoreBundle::main-layout.html.twig" %}
+
+{% block body %}
+    <div id="content-wrapper">
+        <div class="page-header">
+            <div class="row">
+                <h1 class="col-xs-12 col-sm-4 text-center text-left-sm"><i class="fa fa-briefcase page-header-icon"></i>&nbsp;&nbsp;{{company.companyName}}</h1>
+                <div class="col-xs-12 col-sm-8"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>Contact person</th>
+                            <td>{{ company.contactPerson }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{ company.address }}</td>
+                        </tr>
+                        <tr>
+                            <th>Office</th>
+                            <td>{{ company.officeNo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Floor</th>
+                            <td>{{ company.floorNo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{ company.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Mobile</th>
+                            <td>{{ company.mobile }}</td>
+                        </tr>
+                        <tr>
+                            <th>GST</th>
+                            <td>{{ company.gstNo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Electricity Per Unit</th>
+                            <td>{{ company.electricityPerUnit }}</td>
+                        </tr>
+                        {% set checked = company.active == 1 ? 'checked' : '' %}
+                        <tr>
+                            <th>Active</th>
+                            <td><input disabled type="checkbox" class="switcher" {{checked}} value="1"></td>
+                        </tr>
+                        {% set checked = company.igstApplies == 1 ? 'checked' : '' %}
+                        <tr>
+                            <th>IGST Applies</th>
+                            <td><input disabled type="checkbox" class="switcher" {{checked}} value="1"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="panel-footer text-right">
+                    <button class="confirmDel btn btn-danger fa fa-trash-o"></button>
+                    <button class="editCompany btn btn-primary fa fa-edit" id="{{ path('company_edit', {'id':company.id}) }}"></button>
+                    <button class="moveToList btn btn-default" id="{{ path('company_list') }}">Back to list</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_start(delete_form, {attr: {id: 'delFrm'}}) }}
+        <div class="hide"><input type="submit" value="Delete"></div>
+    {{ form_end(delete_form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function(){
+            $('.switcher').switcher({ theme: 'square' });
+            $('.confirmDel').on('click', function(){
+                if(confirm('Are you sure to remove?')) {
+                    $('#delFrm').submit();
+                }
+            })
+            $('.editCompany').on('click', function(){
+                window.location.href = $(this).attr('id')
+            })
+            $('.moveToList').on('click', function(){
+                window.location.href = $(this).attr('id')
+            })
+            $('.switcher-state-off').html('No')
+            $('.switcher-state-on').html('Yes')
+        });
+    </script>
+{% endblock %}
