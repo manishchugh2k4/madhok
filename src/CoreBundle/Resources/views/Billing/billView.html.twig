@@ -38,7 +38,7 @@
         <td class="tg-yw4l" style="text-align:left;">
             <b>Office Rent</b>
         </td>
-        <td class="tg-yw4l"></td>
+        <td class="tg-yw4l"><center>{{billing.billingParticulars}}<center></td>
         <td class="tg-yw4l" style="width:150px; text-align:center;">{{setting.sacCode}}</td>
         <td class="tg-yw4l" style="width:150px; text-align:right;">
             {{ billing.rentAmount|round(2, 'floor') }}
@@ -139,7 +139,7 @@
         <td class="tg-yw4l" colspan="4"></td>
     </tr>
     <tr>
-        <td class="tg-yw4l" colspan="3" style="text-align:left;">Amount in words-</td>
+        <td class="tg-yw4l" colspan="3" style="text-align:left;"><b>Amount in words-</b>  {{grandTotal|inwords}}</td>
         <td class="tg-yw4l">
             <table>
                 <tr>

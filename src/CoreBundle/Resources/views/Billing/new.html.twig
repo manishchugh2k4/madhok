@@ -33,8 +33,13 @@
                                 <div class="row form-group">
                                     <label class="col-sm-4 control-label">{{ form_label(form.billNo) }}:</label>
                                     <div class="col-sm-6" style="padding-top:7px;">
-                                        <b>{{(lastBill.billNo + 1)}}</b>
-                                        {{ form_widget(form.billNo, {attr:{'class':'hide', 'value':(lastBill.billNo + 1)}}) }}
+                                        {% if lastBill is defined and lastBill.billNo is defined %}
+                                            {% set billNum = (lastBill.billNo + 1) %}
+                                        {% else %}
+                                            {% set billNum = 1 %}
+                                        {% endif %}
+                                        <b>{{(billNum + 1)}}</b>
+                                        {{ form_widget(form.billNo, {attr:{'class':'hide', 'value':(billNum)}}) }}
                                     </div>
                                 </div>
                                 <div class="row form-group">
