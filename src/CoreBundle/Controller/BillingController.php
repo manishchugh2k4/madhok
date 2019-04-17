@@ -50,7 +50,7 @@ class BillingController extends Controller
             if (count($errors) <= 0) {
                 if ($form->isSubmitted() && $form->isValid()) {
 
-                    $billing->setBillingDate(new \DateTime);
+                    //$billing->setBillingDate(new \DateTime);
                     $em->persist($billing);
                     $em->flush();
 
@@ -119,11 +119,9 @@ class BillingController extends Controller
             $errors = $validator->validate($billing);
             if (count($errors) <= 0) {
 
-                if ($editForm->isSubmitted() && $editForm->isValid()) {
-                    $this->getDoctrine()->getManager()->flush();
+                $this->getDoctrine()->getManager()->flush();
 
-                    return $this->redirectToRoute('billing_list');
-                }
+                return $this->redirectToRoute('billing_list');
             }
         }
 

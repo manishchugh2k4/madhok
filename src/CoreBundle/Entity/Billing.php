@@ -18,11 +18,6 @@ class Billing
     private $billNo;
 
     /**
-     * @var \DateTime
-     */
-    private $billingDate;
-
-    /**
      * @var float
      */
     private $billingAmount;
@@ -90,30 +85,6 @@ class Billing
     public function getBillNo()
     {
         return $this->billNo;
-    }
-
-    /**
-     * Set billingDate
-     *
-     * @param \DateTime $billingDate
-     *
-     * @return Billing
-     */
-    public function setBillingDate($billingDate)
-    {
-        $this->billingDate = $billingDate;
-
-        return $this;
-    }
-
-    /**
-     * Get billingDate
-     *
-     * @return \DateTime
-     */
-    public function getBillingDate()
-    {
-        return $this->billingDate;
     }
 
     /**
@@ -340,5 +311,35 @@ class Billing
     public function getCompany()
     {
         return $this->company;
+    }
+
+    /**
+     * @var \DateTime
+     */
+    private $billingDate;
+
+
+    /**
+     * Set billingDate
+     *
+     * @param \DateTime $billingDate
+     *
+     * @return Billing
+     */
+    public function setBillingDate($billingDate)
+    {
+        $this->billingDate = $billingDate;
+
+        return $this;
+    }
+
+    /**
+     * Get billingDate
+     *
+     * @return \DateTime
+     */
+    public function getBillingDate()
+    {
+        return $this->billingDate;
     }
 }

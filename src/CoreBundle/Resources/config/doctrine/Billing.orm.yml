@@ -21,7 +21,7 @@ CoreBundle\Entity\Billing:
             type: integer
             unique: true
         billingDate:
-            type: datetime
+            type: date
         billingParticulars:
             type: text
             nullable: true

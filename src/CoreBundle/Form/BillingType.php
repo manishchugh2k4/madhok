@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class BillingType extends AbstractType
@@ -65,6 +66,19 @@ class BillingType extends AbstractType
                 'attr'  => array(
                     'for' => 'billingTotalAmount',
                     'class' => 'form-control billingTotalAmount'
+                )
+            ))
+            ->add('billingDate', DateType::class, array(
+                'required' => false,
+                'widget' => 'single_text', 
+                'format' => 'MM-dd-yyyy', 
+                'label'  => 'Billing Date',
+                'attr' => array(
+                    'placeholder'=>'Billing Date', 
+                    'for' => 'billingDate', 
+                    'class'=>'form-control billingDate datepicker', 
+                    'data-format'=>'MM-dd-yyyy', 
+                    'readonly'=>'readonly'
                 )
             ))
             ->add('canteenAmount', TextType::class, array(

@@ -24,6 +24,9 @@
                     <div class="col-sm-12">
                         {{ form_start(edit_form, {attr: {id: 'editFrm', class: 'panel form-horizontal', novalidate: 'novalidate'}}) }}
                             <div class="panel-body">
+                            
+                
+                            
                                 <div class="row form-group">
                                     <label class="col-sm-4 control-label">{{ form_label(edit_form.billNo) }}:</label>
                                     <div class="col-sm-6" style="padding-top:7px;">
@@ -54,6 +57,12 @@
                                     <label class="col-sm-4 control-label">{{ form_label(edit_form.canteenAmount) }}:</label>
                                     <div class="col-sm-3">
                                         {{ form_widget(edit_form.canteenAmount) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(edit_form.billingDate) }}:</label>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(edit_form.billingDate) }}
                                     </div>
                                 </div>
                                 <div class="row form-group">
@@ -153,6 +162,8 @@
                 }
                 $('.billingTotalAmount').val(rent + canteen + electricity)
             })
+            $('.datepicker').datepicker();
         });
+        
     </script>
 {% endblock %}

@@ -67,6 +67,12 @@
                                     </div>
                                 </div>
                                 <div class="row form-group">
+                                    <label class="col-sm-4 control-label">{{ form_label(form.billingDate) }}:</label>
+                                    <div class="col-sm-3">
+                                        {{ form_widget(form.billingDate) }}
+                                    </div>
+                                </div>
+                                <div class="row form-group">
                                     <label class="col-sm-4 control-label">{{ form_label(form.electricNewReading) }}:</label>
                                     <div class="col-sm-3">
                                         {{ form_widget(form.electricNewReading) }}
@@ -156,6 +162,7 @@
                 }
                 $('.billingTotalAmount').val(rent + canteen + electricity)
             })
+            $('.datepicker').datepicker();
         });
     </script>
 {% endblock %}
