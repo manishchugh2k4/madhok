@@ -48,14 +48,19 @@ class BillingController extends Controller
             $validator = $this->get('validator');
             $errors = $validator->validate($billing);
             if (count($errors) <= 0) {
-                if ($form->isSubmitted() && $form->isValid()) {
+                //if ($form->isSubmitted() && $form->isValid()) {
 
-                    //$billing->setBillingDate(new \DateTime);
+                    $corebundle_billing = $request->get('corebundle_billing');
+                    $billingDate = $corebundle_billing['billingDate'];
+                    $parts = explode('/', $billingDate);
+                    $billingDate = $parts[2] . '-' . $parts[0] . '-' . $parts[1];
+                    $billing->setBillingDate(new \DateTime(date("Y-m-d", strtotime($billingDate))));
+            
                     $em->persist($billing);
                     $em->flush();
 
                     return $this->redirectToRoute('billing_show', array('id' => $billing->getId()));
-                }
+                //}
             }
         }
 
