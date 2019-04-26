@@ -38,8 +38,8 @@
                                         {% else %}
                                             {% set billNum = 1 %}
                                         {% endif %}
-                                        <b>{{(billNum + 1)}}</b>
-                                        {{ form_widget(form.billNo, {attr:{'class':'hide', 'value':(billNum)}}) }}
+                                        {#<b>{{(billNum + 1)}}</b>#}
+                                        {{ form_widget(form.billNo, {attr:{'class':'show', 'value':(billNum)}}) }}
                                     </div>
                                 </div>
                                 <div class="row form-group">

@@ -30,8 +30,8 @@
                                 <div class="row form-group">
                                     <label class="col-sm-4 control-label">{{ form_label(edit_form.billNo) }}:</label>
                                     <div class="col-sm-6" style="padding-top:7px;">
-                                        <b>{{billing.billNo}}</b>
-                                        {{ form_widget(edit_form.billNo, {attr:{'class':'hide', 'value':billing.billNo}}) }}
+                                        {#<b>{{billing.billNo}}</b>#}
+                                        {{ form_widget(edit_form.billNo, {attr:{'class':'show', 'value':billing.billNo}}) }}
                                     </div>
                                 </div>
                                 <div class="row form-group">

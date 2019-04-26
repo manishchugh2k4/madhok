@@ -2,11 +2,25 @@
 
 namespace CoreBundle\Entity;
 
+use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 /**
  * Billing
  */
 class Billing
 {
+    /**
+     * Validatoion required fields.
+     */
+    public static function loadValidatorMetadata(ClassMetadata $metadata)
+    {
+         $metadata->addConstraint(new UniqueEntity([
+            'fields' => 'billNo',
+            'message' => 'Bill No is already genrated!'
+        ]));
+    }
+    
     /**
      * @var int
      */

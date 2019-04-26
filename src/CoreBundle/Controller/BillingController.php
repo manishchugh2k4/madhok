@@ -52,10 +52,15 @@ class BillingController extends Controller
 
                     $corebundle_billing = $request->get('corebundle_billing');
                     $billingDate = $corebundle_billing['billingDate'];
-                    $parts = explode('/', $billingDate);
-                    $billingDate = $parts[2] . '-' . $parts[0] . '-' . $parts[1];
-                    $billing->setBillingDate(new \DateTime(date("Y-m-d", strtotime($billingDate))));
-            
+
+                    if(strstr($billingDate, "/")) {
+                        
+                        $corebundle_billing = $request->get('corebundle_billing');
+                        $billingDate = $corebundle_billing['billingDate'];
+                        $parts = explode('/', $billingDate);
+                        $billingDate = $parts[2] . '-' . $parts[0] . '-' . $parts[1];
+                        $billing->setBillingDate(new \DateTime(date("Y-m-d", strtotime($billingDate))));
+                    }
                     $em->persist($billing);
                     $em->flush();
 
@@ -126,9 +131,13 @@ class BillingController extends Controller
 
                 $corebundle_billing = $request->get('corebundle_billing');
                 $billingDate = $corebundle_billing['billingDate'];
-                $parts = explode('/', $billingDate);
-                $billingDate = $parts[2] . '-' . $parts[0] . '-' . $parts[1];
-                $billing->setBillingDate(new \DateTime(date("Y-m-d", strtotime($billingDate))));
+                
+                if(strstr($billingDate, "/")) {
+                    
+                    $parts = explode('/', $billingDate);
+                    $billingDate = $parts[2] . '-' . $parts[0] . '-' . $parts[1];
+                    $billing->setBillingDate(new \DateTime(date("Y-m-d", strtotime($billingDate))));
+                }
                 
                 $this->getDoctrine()->getManager()->flush();
 
