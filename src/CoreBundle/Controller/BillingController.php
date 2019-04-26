@@ -119,6 +119,12 @@ class BillingController extends Controller
             $errors = $validator->validate($billing);
             if (count($errors) <= 0) {
 
+                $corebundle_billing = $request->get('corebundle_billing');
+                $billingDate = $corebundle_billing['billingDate'];
+                $parts = explode('/', $billingDate);
+                $billingDate = $parts[2] . '-' . $parts[0] . '-' . $parts[1];
+                $billing->setBillingDate(new \DateTime(date("Y-m-d", strtotime($billingDate))));
+                
                 $this->getDoctrine()->getManager()->flush();
 
                 return $this->redirectToRoute('billing_list');

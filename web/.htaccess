@@ -1,3 +1,20 @@
+#####################################
+##RewriteEngine On
+##RewriteRule ^$ /web [L]
+
+#RewriteEngine on
+#RewriteCond %{HTTP_HOST} ^(www.)?madhokbanquet.com$ [NC]
+#RewriteCond %{REQUEST_URI} !^/web/
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^(.*)$ /web/$1
+#RewriteCond %{HTTP_HOST} ^(www.)?madhokbanquet.com$ [NC]
+#RewriteRule ^(/)?$ web/app.php [L]
+####################################
+
+
+
+
 # Use the front controller as index file. It serves as a fallback solution when
 # every other rewrite/redirect fails (e.g. in an aliased environment without
 # mod_rewrite). Additionally, this reduces the matching process for the
